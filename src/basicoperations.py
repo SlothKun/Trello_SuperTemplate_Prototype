@@ -30,6 +30,7 @@ def user_selection():
     else:
         print("""    Users 
         -----""")
+        -----""")
         for user in users:
             print("{0} - {1}".format(nboption, user[1]))
             userselection[nboption] = user

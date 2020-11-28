@@ -11,7 +11,7 @@ class dboperations():
     def connect(self):
         try:
             self.db = sqlite3.connect(self.DBPATH)
-            print("Connected to database !")
+            print("Connected to the database !\n")
         except Exception as e:
             print("An error occured : %d" % e)
 
