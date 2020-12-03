@@ -1,11 +1,8 @@
 import sqlite3
 
-
 class dboperations():
     def __init__(self):
         self.db = ""
-        self.user = ""
-        self.template = ""
         self.DBPATH = "config/Templates.db"
 
     def connect(self):
@@ -17,6 +14,12 @@ class dboperations():
 
     def GET_users(self):
         return self.db.execute('''SELECT * FROM user''').fetchall()
+
+    def GET_apikey(self, username):
+        return self.db.execute('''SELECT apikey FROM user WHERE username=?''', (username,)).fetchall()[0][0]
+
+    def GET_apitoken(self, username):
+        return self.db.execute('''SELECT apitoken FROM user WHERE username=?''', (username,)).fetchall()[0][0]
 
     def GET_template(self):
         return self.db.execute('''SELECT name FROM template''').fetchall()
@@ -33,6 +36,6 @@ class dboperations():
         print("User {0} has been successfully added !".format(username))
 
     def DEL_user(self, username):
-        self.db.execute('''DELETE FROM user WHERE username=?''', username)
+        self.db.execute('''DELETE FROM user WHERE username=?''', (username,))
         self.db.commit()
         print("User {0} has been successfully deleted !".format(username))

@@ -1,13 +1,17 @@
 import dboperations
 import menus
-import basicoperations as bo
+import basicoperations
 import sys
 
+bo = basicoperations.baseoperations()
+bo.dbconnect()
+
 users = bo.getusers()
+menusobj = menus.menus(bo)
 
 if len(users) != 0:
-    menus.mainmenu()
-
+    menusobj.usermenu()
+    menusobj.tablemenu()
 else:
     answerinput = ""
     while answerinput not in ['y', 'n']:
