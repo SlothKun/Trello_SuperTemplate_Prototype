@@ -3,6 +3,20 @@ import menus
 import basicoperations
 import sys
 
+'''
+    TO-DOs :
+        - Add line return (to make it visually better) 
+'''
+
+def notfound_continue(object):
+    answerinput = ""
+    while answerinput not in ['y', 'n']:
+        answerinput = input(f"No {object} found ! Create one ? (y/n) : ")
+    if answerinput == 'n':
+        print("Exiting now..")
+        sys.exit(0)
+
+
 bo = basicoperations.baseoperations()
 bo.dbconnect()
 
@@ -12,12 +26,11 @@ menusobj = menus.menus(bo)
 if len(users) != 0:
     menusobj.usermenu()
     menusobj.tablemenu()
-else:
-    answerinput = ""
-    while answerinput not in ['y', 'n']:
-        answerinput = input("No user found ! Create one ? (y/n) : ")
-    if answerinput == 'y':
-        bo.user_creation()
+    if len(bo.gettemplates()) != 0:
+        menusobj.templatemenu()
     else:
-        print('Understandable, have a good day')
-        sys.exit(0)
+        notfound_continue("template")
+        bo.template_creation()
+else:
+    notfound_continue("user")
+    bo.user_creation()

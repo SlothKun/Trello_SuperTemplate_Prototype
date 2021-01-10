@@ -48,16 +48,15 @@ class menus():
             option = input("Select an option : ")
 
         if option == '1':
-            pass
+            self.bo.template_selection()
             # Todo - Call template selection
         elif option == '2':
-            pass
-            # Todo - Call template addition
+            self.bo.template_creation()
+            # Todo - Call template creation
         elif option == '3':
-            pass
+            self.bo.template_deletion()
             # Todo - Call template deletion
-        elif option == '3':
-            pass
-            # Todo - Call last menu
+        elif option == '4':
+            self.tablemenu()
         else:
             sys.exit(0)

@@ -12,30 +12,43 @@ class dboperations():
         except Exception as e:
             print("An error occured : %d" % e)
 
-    def GET_users(self):
+    def get_users(self):
         return self.db.execute('''SELECT * FROM user''').fetchall()
 
-    def GET_apikey(self, username):
+    def get_userid(self, username):
+        return self.db.execute('''SELECT id FROM user WHERE username=?''', (username,)).fetchall()[0][0]
+
+    def get_apikey(self, username):
         return self.db.execute('''SELECT apikey FROM user WHERE username=?''', (username,)).fetchall()[0][0]
 
-    def GET_apitoken(self, username):
+    def get_apitoken(self, username):
         return self.db.execute('''SELECT apitoken FROM user WHERE username=?''', (username,)).fetchall()[0][0]
 
-    def GET_template(self):
-        return self.db.execute('''SELECT name FROM template''').fetchall()
+    def get_templates(self, boardid):
+        return self.db.execute('''SELECT * FROM template WHERE trello_boardid =?''', (boardid,)).fetchall()
 
-    def GET_list(self, template):
+    def get_list(self, template):
         return self.db.execute('''SELECT name FROM list join template on templateid = template.id where templateid = %d''' % template).fetchall()
 
-    def GET_cards(self, list):
+    def get_cards(self, list):
         return self.db.execute('''SELECT name FROM card join list on listid = list.id where templateid = %d''' % list).fetchall()
 
-    def INS_user(self, username, apikey, apitoken):
+    def ins_user(self, username, apikey, apitoken):
         self.db.execute('''INSERT INTO user (username, apikey, apitoken) VALUES (?, ?, ?)''', (username, apikey, apitoken))
         self.db.commit()
-        print("User {0} has been successfully added !".format(username))
+        print("User '{0}' has been successfully added !".format(username))
 
-    def DEL_user(self, username):
+    def ins_template(self, template_name, boardid, username):
+        self.db.execute('''INSERT INTO template (name, trello_boardid, userid) VALUES (?, ?, ?)''', (template_name, boardid, self.get_userid(username)))
+        self.db.commit()
+        print("Template '{0}' has been successfully added !".format(template_name))
+
+    def del_user(self, username):
         self.db.execute('''DELETE FROM user WHERE username=?''', (username,))
         self.db.commit()
-        print("User {0} has been successfully deleted !".format(username))
+        print("User '{0}' has been successfully deleted !".format(username))
+
+    def del_template(self, templatename):
+        self.db.execute('''DELETE FROM template WHERE name=?''', (templatename,))
+        self.db.commit()
+        print("Template '{0}' has been successfully deleted !".format(templatename))
