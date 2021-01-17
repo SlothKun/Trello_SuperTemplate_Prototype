@@ -1,7 +1,9 @@
 import sys
 import dboperations
 import restapioperations as apiop
+import pprint
 
+pp = pprint.PrettyPrinter(indent=4)
 #db = dboperations.dboperations()
 #db.connect()
 
@@ -11,7 +13,7 @@ class baseoperations():
         self.key = ""
         self.token = ""
         self.board = ""
-        self.template = ""
+        self.templateid = ""
         self.db = dboperations.dboperations()
         self.api = ""
 
@@ -100,7 +102,9 @@ class baseoperations():
 
         if len(boards) == 1:
             # to-do : test this one
-            boardselection[str(nboption)] = (boards.keys()[0], id.values()[0])
+            # no id, need to fix this
+            #boardselection[str(nboption)] = (boards.keys()[0], id.values()[0])
+            pass
         else:
             print("""    Boards 
     ------""")
@@ -156,6 +160,7 @@ class baseoperations():
 
 
     def template_creation(self):
+        self.db.del_template("TEST")
         lists = self.api.get_alllists(self.board[1])
         user_input = ''
         activation_control = {"(included)":"(excluded)", "(excluded)":"(included)"}
@@ -172,13 +177,46 @@ class baseoperations():
                 for option in options.items():
                     lists[option[1][0]] = option[1][1]
 
-        # to-do: add confirmation (put name choice in a function and call it)
+        # TODO : change pos after included/excluded chosen
+        print("lists after included/excluded")
+        pp.pprint(lists)
+        # TODO: add confirmation (put name choice in a function and call it)
         template_name = ""
         while template_name == "":
             template_name = input("Please enter the template name : ")
 
-        # to-do : add lists, card ... entries in db
+        # TODO : add lists, card ... entries in db
+
+        #self.db.ins_template(template_name, self.board[1], self.username)
+        alllabels = self.api.get_alllabels(self.board[1])
+        # add labels in db
+        print("BOARD :")
+        pp.pprint(self.board)
+        #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
+        #return
         self.db.ins_template(template_name, self.board[1], self.username)
+        self.templateid = self.db.get_templateid(template_name, self.board[1])
+        for boardlabel in alllabels:
+            self.db.ins_boardlabel(self.templateid, boardlabel['id'],
+                                   boardlabel['name'], boardlabel['color'])
+        #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
+        for listname, params in lists.items():
+            # TODO : insert ONLY included list
+            listtrelloid = params[0]
+            #listid = self.db.get_listid(listtrelloid, self.templateid)
+            self.db.ins_list(self.templateid, listtrelloid, params[1], params[2])
+            listid = self.db.get_listid(listtrelloid, self.templateid)
+            carddatas = self.api.get_cards_inlist(params[0])
+
+            for cardname, carddata in carddatas.items():
+                self.db.ins_card(self.templateid, listid, carddata[0],
+                                 cardname, carddata[1], carddata[3])
+                cardid = self.db.get_cardid(listid, carddata[0])
+                for cardlabel in carddata[2]:
+                    labelid = self.db.get_labelid(cardlabel['id'])
+                    self.db.ins_cardlabel(cardid, labelid)
+                    print(f"Cardlabel '{cardlabel['name']}' has been succesfully added'")
+        # self.db.ins_template(template_name, self.board[1], self.username)
 
 
     def template_selection(self):
