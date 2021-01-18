@@ -160,7 +160,6 @@ class baseoperations():
 
 
     def template_creation(self):
-        self.db.del_template("TEST")
         lists = self.api.get_alllists(self.board[1])
         user_input = ''
         activation_control = {"(included)":"(excluded)", "(excluded)":"(included)"}
@@ -193,7 +192,6 @@ class baseoperations():
         print("BOARD :")
         pp.pprint(self.board)
         #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
-        #return
         self.db.ins_template(template_name, self.board[1], self.username)
         self.templateid = self.db.get_templateid(template_name, self.board[1])
         for boardlabel in alllabels:
@@ -201,22 +199,25 @@ class baseoperations():
                                    boardlabel['name'], boardlabel['color'])
         #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
         for listname, params in lists.items():
-            # TODO : insert ONLY included list
-            listtrelloid = params[0]
-            #listid = self.db.get_listid(listtrelloid, self.templateid)
-            self.db.ins_list(self.templateid, listtrelloid, params[1], params[2])
-            listid = self.db.get_listid(listtrelloid, self.templateid)
-            carddatas = self.api.get_cards_inlist(params[0])
+            print("PARAMS !")
+            pp.pprint(params[1])
+            if params[1] == "(included)":
+                print(f"LIST NAME {listname}")
+                # TODO : insert ONLY included list
+                listtrelloid = params[0]
+                #listid = self.db.get_listid(listtrelloid, self.templateid)
+                self.db.ins_list(self.templateid, listtrelloid, listname, params[2])
+                listid = self.db.get_listid(listtrelloid, self.templateid)
+                carddatas = self.api.get_cards_inlist(params[0])
 
-            for cardname, carddata in carddatas.items():
-                self.db.ins_card(self.templateid, listid, carddata[0],
-                                 cardname, carddata[1], carddata[3])
+                for cardname, carddata in carddatas.items():
+                    self.db.ins_card(self.templateid, listid, carddata[0],
+                                     cardname, carddata[1], carddata[3])
                 cardid = self.db.get_cardid(listid, carddata[0])
                 for cardlabel in carddata[2]:
                     labelid = self.db.get_labelid(cardlabel['id'])
                     self.db.ins_cardlabel(cardid, labelid)
                     print(f"Cardlabel '{cardlabel['name']}' has been succesfully added'")
-        # self.db.ins_template(template_name, self.board[1], self.username)
 
 
     def template_selection(self):

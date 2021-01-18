@@ -47,7 +47,7 @@ class ApiOp():
             allcards[card['name']] = [card['id'], card['desc'],
                                       card['labels'], pos]
             pos += 1
-        pp.pprint(allcards)
+        #pp.pprint(allcards)
         return allcards
 
     def get_alllabels(self, boardid):
