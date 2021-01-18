@@ -79,14 +79,14 @@ class dboperations():
                            VALUES (?, ?, ?, ?)""",
                         (template_id, labeltrelloid, labelname, labelcolor))
         self.db.commit()
-        print("Board label '{0}' ({1}) has been successfully added !".format(labelname, labelcolor))
+        #print("Board label '{0}' ({1}) has been successfully added !".format(labelname, labelcolor))
 
     def ins_list(self, template_id, listtrelloid, listname, listpos):
         self.db.execute("""INSERT INTO list (templateid, trelloid, name, pos)
                             VALUES (?, ?, ?, ?)""",
                         (template_id, listtrelloid, listname, listpos))
         self.db.commit()
-        print("List '{0}' has been successfully added !".format(listname))
+        #print("List '{0}' has been successfully added !".format(listname))
 
     def ins_card(self, template_id, list_id, cardtrelloid, cardname, carddesc, cardpos):
         #template_id = self.get_templateid(templatename)
@@ -95,13 +95,11 @@ class dboperations():
                            VALUES (?, ?, ?, ?, ?, ?)""",
                         (template_id, list_id, cardtrelloid, cardname, cardpos, carddesc))
         self.db.commit()
-        print("Card '{0}' has been successfully added !".format(cardname))
+        #print("Card '{0}' has been successfully added !".format(cardname))
 
     def ins_cardlabel(self, card_id, label_id):
-        #cardlabel_id = self.get_labelid(cardlabelname)
-        #card_id = self.get_cardid(card_trelloid)
-        print(f"cardlabelid {label_id}")
-        print(f"cardid {card_id}")
+        #print(f"cardlabelid {label_id}")
+        #print(f"cardid {card_id}")
         self.db.execute("""INSERT INTO cardlabel (cardid, labelid)
                            VALUES (?, ?)""",
                         (card_id, label_id))

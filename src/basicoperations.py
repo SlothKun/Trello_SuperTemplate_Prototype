@@ -213,11 +213,11 @@ class baseoperations():
                 for cardname, carddata in carddatas.items():
                     self.db.ins_card(self.templateid, listid, carddata[0],
                                      cardname, carddata[1], carddata[3])
-                cardid = self.db.get_cardid(listid, carddata[0])
-                for cardlabel in carddata[2]:
-                    labelid = self.db.get_labelid(cardlabel['id'])
-                    self.db.ins_cardlabel(cardid, labelid)
-                    print(f"Cardlabel '{cardlabel['name']}' has been succesfully added'")
+                    cardid = self.db.get_cardid(listid, carddata[0])
+                    for cardlabel in carddata[2]:
+                        labelid = self.db.get_labelid(cardlabel['id'])
+                        self.db.ins_cardlabel(cardid, labelid)
+                        print(f"Cardlabel '{cardlabel['name']}' has been succesfully added'")
 
 
     def template_selection(self):
