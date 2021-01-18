@@ -23,8 +23,8 @@ class ApiOp():
                                 params={'key': self.key,
                                         'token': self.token}).json()
         alllists_data = {}
-        print("all lists response : ")
-        pp.pprint(response)
+        #print("all lists response : ")
+        #pp.pprint(response)
         pos = 0
         for listdata in response:
             alllists_data[listdata['name']] = [listdata['id'], "(included)", pos]
@@ -40,7 +40,7 @@ class ApiOp():
                                 params={'key': self.key,
                                         'token': self.token}).json()
         allcards = {}
-        print("card in list : ")
+        #print("card in list : ")
         #pp.pprint(response)
         pos = 0
         for card in response:
@@ -57,6 +57,6 @@ class ApiOp():
         response = requests.get('https://api.trello.com/1/boards/%s/labels' % boardid,
                                 params={'key': self.key,
                                         'token': self.token}).json()
-        print("\nall_labels : ")
-        pp.pprint(response)
+        #print("\nall_labels : ")
+        #pp.pprint(response)
         return response
