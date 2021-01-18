@@ -13,7 +13,6 @@ class dboperations():
             self.db = sqlite3.connect(self.DBPATH)
             self.db.execute("""PRAGMA foreign_keys = 1;""")
             self.db.commit()
-            print(self.db.execute("""PRAGMA foreign_keys;"""))
             print("Connected to the database !\n")
         except Exception as e:
             print("An error occured : %d" % e)

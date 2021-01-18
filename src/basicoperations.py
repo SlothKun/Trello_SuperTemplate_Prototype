@@ -177,8 +177,8 @@ class baseoperations():
                     lists[option[1][0]] = option[1][1]
 
         # TODO : change pos after included/excluded chosen
-        print("lists after included/excluded")
-        pp.pprint(lists)
+        #print("lists after included/excluded")
+        #pp.pprint(lists)
         # TODO: add confirmation (put name choice in a function and call it)
         template_name = ""
         while template_name == "":
@@ -189,8 +189,8 @@ class baseoperations():
         #self.db.ins_template(template_name, self.board[1], self.username)
         alllabels = self.api.get_alllabels(self.board[1])
         # add labels in db
-        print("BOARD :")
-        pp.pprint(self.board)
+        #print("BOARD :")
+        #pp.pprint(self.board)
         #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
         self.db.ins_template(template_name, self.board[1], self.username)
         self.templateid = self.db.get_templateid(template_name, self.board[1])
@@ -198,9 +198,8 @@ class baseoperations():
             self.db.ins_boardlabel(self.templateid, boardlabel['id'],
                                    boardlabel['name'], boardlabel['color'])
         #self.api.get_cards_inlist("5f9973dc04607b52ed796bf8")
+        print("Boardlabels successfully added")
         for listname, params in lists.items():
-            print("PARAMS !")
-            pp.pprint(params[1])
             if params[1] == "(included)":
                 print(f"LIST NAME {listname}")
                 # TODO : insert ONLY included list
@@ -217,8 +216,9 @@ class baseoperations():
                     for cardlabel in carddata[2]:
                         labelid = self.db.get_labelid(cardlabel['id'])
                         self.db.ins_cardlabel(cardid, labelid)
-                        print(f"Cardlabel '{cardlabel['name']}' has been succesfully added'")
-
+                    #print(f"Cardlabels has been succesfully added'")
+                print(f"Cards & Cardlabels has been successfully added")
+        print("Lists has been successfully added")
 
     def template_selection(self):
         alltemplates, templatescount = self.templates_printing()
