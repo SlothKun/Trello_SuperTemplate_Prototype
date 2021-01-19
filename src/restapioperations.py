@@ -50,6 +50,7 @@ class ApiOp():
         #pp.pprint(allcards)
         return allcards
 
+    # TODO : change % by ? method (do the same for the others)
     def get_alllabels(self, boardid):
         """
             Call Trello's REST API for all labels in specified board
@@ -60,3 +61,21 @@ class ApiOp():
         #print("\nall_labels : ")
         #pp.pprint(response)
         return response
+
+    def del_card(self, card_trelloid):
+        """
+            Delete specified card through Trello's REST API
+        """
+        requests.delete(f"https://api.trello.com/1/cards/{card_trelloid}",
+                        params={"key":self.key,
+                                "token": self.token}).json()
+
+
+    def update_card(self, card_trelloid, changes):
+        """
+            Update specified card params through Trello's REST API
+        """
+        changes["key"] = self.key
+        changes["token"] = self.token
+        requests.put(f"https://api.trello.com/1/cards/{card_trelloid}",
+                     params=changes)

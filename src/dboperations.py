@@ -35,21 +35,33 @@ class dboperations():
     def get_templateid(self, templatename, boardid):
         return self.db.execute("""SELECT id FROM template WHERE name=? AND trello_boardid=?""", (templatename, boardid,)).fetchall()[0][0]
 
-    def get_list(self, template):
-        return self.db.execute('''SELECT name FROM list join template on templateid = template.id where templateid = %d''' % template).fetchall()
+    def get_lists(self, template_id):
+        return self.db.execute('''SELECT * FROM list WHERE templateid=?''', (template_id,)).fetchall()
 
-    def get_listid(self, listtrelloid, template_id):
-        return self.db.execute("""SELECT id FROM list WHERE trelloid=? AND templateid=?""", (listtrelloid, template_id,)).fetchall()[0][0]
+    def get_listid(self, listtrelloid, template_dbid):
+        return self.db.execute("""SELECT id FROM list WHERE trelloid=? AND templateid=?""", (listtrelloid, template_dbid,)).fetchall()[0][0]
 
-    # Not good
-    def get_cards(self, list):
-        return self.db.execute('''SELECT name FROM card join list on listid = list.id where templateid = %d''' % list).fetchall()
+    def get_cards(self, list_dbid, template_dbid):
+        return self.db.execute('''SELECT * FROM card WHERE listid=? AND templateid=?''', (list_dbid, template_dbid,)).fetchall()
+
+    # TODO : modify with the new db design
+    def get_cardlabels(self, card_dbid):
+        return self.db.execute("""SELECT * FROM cardlabel WHERE cardid=?""", (card_dbid,)).fetchall()
 
     def get_cardid(self, listid, cardtrelloid):
-        return self.db.execute("""SELECT id FROM card WHERE listid=? AND trelloid=?""", (listid, cardtrelloid)).fetchall()[0][0]
+        return self.db.execute("""SELECT id FROM card WHERE listid=? AND trelloid=?""", (listid, cardtrelloid,)).fetchall()[0][0]
 
-    def get_labelid(self, cardlabeltrelloid):
-        return self.db.execute("""SELECT id FROM label WHERE trelloid=?""", (cardlabeltrelloid,)).fetchall()[0][0]
+    def get_cardname(self, cardid):
+        return self.db.execute("""SELECT name FROM card WHERE id=?""", (cardid,)).fetchall()[0][0]
+
+    def get_labelid(self, labeltrelloid):
+        return self.db.execute("""SELECT id FROM label WHERE trelloid=?""", (labeltrelloid,)).fetchall()[0][0]
+
+    def get_labeltrelloid(self, label_dbid):
+        return self.db.execute("""SELECT trelloid FROM label WHERE id=?""", (label_dbid,)).fetchall()[0][0]
+
+    def get_labelname(self, label_dbid):
+        return self.db.execute("""SELECT name FROM label WHERE id=?""", (label_dbid,)).fetchall()[0][0]
 
     def ins_user(self, username, apikey, apitoken):
         self.db.execute('''INSERT INTO user (username, apikey, apitoken) VALUES (?, ?, ?)''', (username, apikey, apitoken))
