@@ -217,7 +217,7 @@ class baseoperations():
                     pp.pprint(carddata[2])
                     for cardlabel in carddata[2]:
                         labelid = self.db.get_labelid(cardlabel['id'])
-                        self.db.ins_cardlabel(str(cardid), str(labelid))
+                        self.db.ins_cardlabel(str(cardid), str(labelid), self.templateid)
                         #print(f"label {self.db.get_labelname(str(labelid))} inserted as id : {labelid} for {cardid} ({self.db.get_cardname(str(cardid))})")
                     #print(f"Cardlabels has been succesfully added'")
                 print(f"Cards & Cardlabels has been successfully added")
@@ -267,7 +267,7 @@ class baseoperations():
                                 if trellocardparams[0] == templatecard[3]:
                                     print(f"Trello card name : ", trellocardname)
                                     # TODO : Stupid, improve it later
-                                    templatecardlabels = self.db.get_cardlabels(str(templatecard[0]))
+                                    templatecardlabels = self.db.get_cardlabels(str(templatecard[0]), self.templateid)
                                     changes = {}
                                     # TODO : verify each item to save resources
                                     changes["name"] = templatecard[4]

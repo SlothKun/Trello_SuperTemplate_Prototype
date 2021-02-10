@@ -44,9 +44,9 @@ class dboperations():
     def get_cards(self, list_dbid, template_dbid):
         return self.db.execute('''SELECT * FROM card WHERE listid=? AND templateid=?''', (list_dbid, template_dbid,)).fetchall()
 
-    # TODO : modify with the new db design
-    def get_cardlabels(self, card_dbid):
-        return self.db.execute("""SELECT * FROM cardlabel WHERE cardid=?""", (card_dbid,)).fetchall()
+    # TODO : modify with the new db design  DONE
+    def get_cardlabels(self, card_dbid, template_dbid):
+        return self.db.execute("""SELECT * FROM cardlabel WHERE cardid=? AND templateid=?""", (card_dbid, template_dbid)).fetchall()
 
     def get_cardid(self, listid, cardtrelloid):
         return self.db.execute("""SELECT id FROM card WHERE listid=? AND trelloid=?""", (listid, cardtrelloid,)).fetchall()[0][0]
@@ -108,11 +108,11 @@ class dboperations():
         self.db.commit()
         #print("Card '{0}' has been successfully added !".format(cardname))
 
-    def ins_cardlabel(self, card_id, label_id):
+    def ins_cardlabel(self, card_id, label_id, template_id):
         #print(f"cardlabelid {label_id}")
         #print(f"cardid {card_id}")
-        self.db.execute("""INSERT INTO cardlabel (cardid, labelid)
-                           VALUES (?, ?)""",
-                        (card_id, label_id))
+        self.db.execute("""INSERT INTO cardlabel (cardid, labelid, templateid)
+                           VALUES (?, ?, ?)""",
+                        (card_id, label_id, template_id))
         self.db.commit()
         #print("Cardlabel '{0}' has been successfully added !".format(cardlabelname))

@@ -6,6 +6,11 @@ import sys
 '''
     TO-DOs :
         - Add line return (to make it visually better)
+        - Make the change in DB design
+        - Update DB Template
+        - Make things visually better
+        - loop the code (don't end after each action)
+        - Replace please choose the board by please choose the template in template printing
 '''
 
 

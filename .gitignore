@@ -1,5 +1,6 @@
 .idea/
 Templates.db
+__DATA__/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
