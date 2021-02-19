@@ -42,4 +42,5 @@ To apply, choose the template in the list when you select the board again.
 
 ### Data saved in template
 Here's the design of the database, you can see all informated that is stored and used
-![image](https://user-images.githubusercontent.com/25417942/108525115-0c4bf280-72d0-11eb-8dc4-3d2d3c68d97b.png)
+![image](https://user-images.githubusercontent.com/25417942/108526053-00146500-72d1-11eb-98c7-ccff05790490.png)
+
