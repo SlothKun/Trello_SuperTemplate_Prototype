@@ -6,7 +6,7 @@ pp = pprint.PrettyPrinter(indent=4)
 class dboperations():
     def __init__(self):
         self.db = ""
-        self.DBPATH = "config/Templates.db"
+        self.DBPATH = "config/Database.db"
 
     def connect(self):
         try:
