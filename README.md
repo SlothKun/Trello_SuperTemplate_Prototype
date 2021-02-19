@@ -44,3 +44,7 @@ To apply, choose the template in the list when you select the board again.
 Here's the design of the database, you can see all informated that is stored and used
 ![image](https://user-images.githubusercontent.com/25417942/108526053-00146500-72d1-11eb-98c7-ccff05790490.png)
 
+
+## End note
+The project is still a prototype which means a lot a things won't work perfectly. I'll probably give some updates but won't be actively update the project (i think)
+If the project interest you & you want to improve it, you're welcome to give me feedbacks, or to improve it by yourself.
