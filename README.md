@@ -35,7 +35,7 @@ If all the informations are correct, you'll be able to log in using the app.
 ## Create a template
 Once you've selected the board on which you want to apply a template, the app will, if you haven't created a template yet, ask you to create one.\
 The template creation doesn't have a lot of option for the moment, you'll only be able to include/exclude your lists from the template you want to create, you'll not be able to include/exclude specific card in specific list. If you include a list, it'll include all cards in that list in the template.\
-Only lists (and cards' lists) included will be modified when you'll apply the template to your board.\
+Only lists (and lists' cards) included will be modified when you'll apply the template to your board.\
 When you're done, continue and enter the template name and there's it, you've create your first template.
 
 To apply, choose the template in the list when you select the board again.
